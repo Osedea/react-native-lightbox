@@ -29,6 +29,7 @@ var Lightbox = React.createClass({
     backgroundColor: PropTypes.string,
     onOpen:          PropTypes.func,
     onClose:         PropTypes.func,
+    beforeClose:     PropTypes.func,
     springConfig:    PropTypes.shape({
       tension:       PropTypes.number,
       friction:      PropTypes.number,
@@ -41,6 +42,9 @@ var Lightbox = React.createClass({
       swipeToDismiss: true,
       onOpen: () => {},
       onClose: () => {},
+      beforeClose: () => {},
+      animatedViewBaseStyle: { flex: 1 },
+      touchableStyle: { flex: 1 },
     };
   },
 
@@ -79,6 +83,7 @@ var Lightbox = React.createClass({
       backgroundColor: this.props.backgroundColor,
       children: this.getContent(),
       onClose: this.onClose,
+      beforeClose: this.props.beforeClose,
     };
   },
 
@@ -140,9 +145,10 @@ var Lightbox = React.createClass({
         style={this.props.style}
         onLayout={() => {}}
       >
-        <Animated.View style={{opacity: this.state.layoutOpacity}}>
+        <Animated.View style={[{opacity: this.state.layoutOpacity}, this.props.animatedViewBaseStyle]}>
           <TouchableHighlight
             underlayColor={this.props.underlayColor}
+            style={this.props.touchableStyle}
             onPress={this.open}
           >
             {this.props.children}
