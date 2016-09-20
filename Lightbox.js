@@ -41,6 +41,8 @@ var Lightbox = React.createClass({
       swipeToDismiss: true,
       onOpen: () => {},
       onClose: () => {},
+      animatedViewBaseStyle: { flex: 1 },
+      touchableStyle: { flex: 1 },
     };
   },
 
@@ -140,9 +142,10 @@ var Lightbox = React.createClass({
         style={this.props.style}
         onLayout={() => {}}
       >
-        <Animated.View style={{opacity: this.state.layoutOpacity}}>
+        <Animated.View style={[{opacity: this.state.layoutOpacity}, this.props.animatedViewBaseStyle]}>
           <TouchableHighlight
             underlayColor={this.props.underlayColor}
+            style={this.props.touchableStyle}
             onPress={this.open}
           >
             {this.props.children}
